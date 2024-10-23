@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compressor Monitor</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Compressor Monitor Map</h1>
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        // Initialize the map and set its view
+        const map = L.map('map').setView([35.4676, -97.5164], 5); // Center on Oklahoma/Texas region
+
+        // Add OpenStreetMap tiles to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+        }).addTo(map);
+
+        // Fetch compressor data from the server
+        fetch('http://localhost:3000/compressors')
+            .then(response => response.json())
+            .then(data => {
+                const compressors = data.compressors;
+
+                // Loop through each compressor and add a marker to the map
+                compressors.forEach(compressor => {
+                    const marker = L.marker([compressor.latitude, compressor.longitude]).addTo(map);
+
+                    // Create a popup with compressor metrics
+                    const popupContent = `
+                        <b>Compressor ID:</b> ${compressor.id}<br>
+                        <b>Timestamp:</b> ${compressor.timestamp}<br>
+                        <b>Engine Temperature:</b> ${compressor.engineTemperature} °C<br>
+                        <b>Vibration Engine X:</b> ${compressor.vibrationEngineX} mm/s<br>
+                        <b>Vibration Engine Y:</b> ${compressor.vibrationEngineY} mm/s<br>
+                        <b>Vibration Engine Z:</b> ${compressor.vibrationEngineZ} mm/s<br>
+                        <b>Pressure:</b> ${compressor.pressure} PSI<br>
+                        <b>RPM:</b> ${compressor.rpm}<br>
+                        <b>Gas Flow Rate:</b> ${compressor.gasFlowRate} SCFM<br>
+                        <b>Runtime Hours:</b> ${compressor.runtimeHours} hrs
+                    `;
+
+                    // Bind popup to the marker
+                    marker.bindPopup(popupContent);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching compressor data:', error);
+            });
+    </script>
+</body>
+
+</html>
