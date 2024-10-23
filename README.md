@@ -15,6 +15,9 @@ compressor-monitor/
         dashboard.js
         index.html
 
+## Screenshots
+<img src="https://github.com/dougmolineux/compressor-monitor/blob/main/screenshots/map-with-popup.jpg?raw=true"/>
+
 ## Features
 - **CSV Generator**: Randomly generates compressor metrics, such as engine temperature, vibration levels (in multiple axes), pressure, RPM, and runtime hours.
 - **Real-time Visualization**: A future enhancement that will visualize compressor data through interactive charts and graphs.
@@ -44,4 +47,8 @@ compressor-monitor/
 1. Navigate to the `server/` folder.
 2. Run the command to generate 1,000 compressor metric entries:
    ```bash
-   node generateMetrics.js
+   npm start
+   ```
+
+### Client 
+Open index.html in a browser
