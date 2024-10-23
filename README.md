@@ -51,4 +51,7 @@ compressor-monitor/
    ```
 
 ### Client 
-Open index.html in a browser
+Open index.html in a browser, in order to avoid cors issues, you can start a webserver like this:
+   ```bash
+    npx http-server . --cors
+    ```
