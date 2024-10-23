@@ -45,7 +45,7 @@ compressor-monitor/
 
 ### Server
 1. Navigate to the `server/` folder.
-2. Run the command to generate 1,000 compressor metric entries:
+2. Run the server:
    ```bash
    npm start
    ```
